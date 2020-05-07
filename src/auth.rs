@@ -18,7 +18,7 @@ struct UserClaims {
 impl ValidatedToken {
     pub fn from_str(value: &str, key: &[u8]) -> Result<ValidatedToken, Box<dyn Error>> {
         let validation = Validation::new(Algorithm::RS512);
-	janus_info!("Key is: {:?}", key);
+	janus_info!("Key is: {:?}", str::from_utf8(&key).unwrap());
         let token_data = decode::<UserClaims>(value, key, &validation)?;
         Ok(ValidatedToken {
             join_hub: token_data.claims.join_hub,
