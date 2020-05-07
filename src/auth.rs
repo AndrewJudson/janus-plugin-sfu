@@ -1,3 +1,4 @@
+use janus_plugin::{janus_info};
 use jsonwebtoken::{decode, Algorithm, Validation};
 use serde::{Deserialize, Serialize};
 use std::error::Error;
@@ -17,6 +18,7 @@ struct UserClaims {
 impl ValidatedToken {
     pub fn from_str(value: &str, key: &[u8]) -> Result<ValidatedToken, Box<dyn Error>> {
         let validation = Validation::new(Algorithm::RS512);
+	janus_info!("Key is: {:?}", key);
         let token_data = decode::<UserClaims>(value, key, &validation)?;
         Ok(ValidatedToken {
             join_hub: token_data.claims.join_hub,
