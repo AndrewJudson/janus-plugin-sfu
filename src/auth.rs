@@ -28,6 +28,7 @@ impl ValidatedToken {
         let token = encode(&Header::new(Algorithm::RS512), &my_claims, &EncodingKey::from_rsa_pem(key)?).unwrap();
 	janus_info!("Claims are: {:?}", unvalidated);
         janus_info!("Encoded token is: {:?}", token);
+        janus_info!("Using encoded token as input");
         let token_data = decode::<UserClaims>(&token, &DecodingKey::from_rsa_pem(key)?, &validation)?;
         Ok(ValidatedToken {
             join_hub: token_data.claims.join_hub,
