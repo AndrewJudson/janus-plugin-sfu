@@ -25,10 +25,10 @@ impl ValidatedToken {
             join_hub: true.to_owned(),
             kick_users: false.to_owned()
         };
-        let token = encode(&Header::new(Algorithm::RS512), &my_claims, &EncodingKey::from_rsa_pem(key)).unwrap();
+        let token = encode(&Header::new(Algorithm::RS512), &my_claims, &EncodingKey::from_rsa_pem(key)?).unwrap();
 	janus_info!("Claims are: {:?}", unvalidated);
         janus_info!("Encoded token is: {:?}", token);
-        let token_data = decode::<UserClaims>(value, &DecodingKey::from_rsa_pem(key), &validation)?;
+        let token_data = decode::<UserClaims>(value, &DecodingKey::from_rsa_pem(key)?, &validation)?;
         Ok(ValidatedToken {
             join_hub: token_data.claims.join_hub,
             kick_users: token_data.claims.kick_users,
