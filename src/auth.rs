@@ -19,7 +19,7 @@ impl ValidatedToken {
     pub fn from_str(value: &str, key: &[u8]) -> Result<ValidatedToken, Box<dyn Error>> {
         let validation = Validation::new(Algorithm::RS512);
 	janus_info!("Value is {:?}", value);
-	janus_info!("Key is: {:?}", std::str::from_utf8(&key).unwrap());
+	//janus_info!("Key is: {:?}", std::str::from_utf8(&key).unwrap());
 	let unvalidated = dangerous_unsafe_decode::<UserClaims>(value);
 	janus_info!("Claims are: {:?}", unvalidated);
         let token_data = decode::<UserClaims>(value, key, &validation)?;
